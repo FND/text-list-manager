@@ -12,8 +12,13 @@ class TextListManager
 
 	add: (item) ->
 		@items.push(item)
-		return @list
+		@serialize()
+		return
 	
+	serialize: ->
+		@field.val @items.join(@delimiter)
+		return
+
 	deserialize: ->
 		@items = []
 		return
@@ -33,5 +38,4 @@ $.fn.textListManager = (cmd, args...) ->
 			result = manager[cmd](args...)
 			return false
 
-	console.log cmd, result
 	return if cmd then result else @

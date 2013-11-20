@@ -10,14 +10,20 @@ module("TextListManager API", setup: ->
 
 test("initialization", ->
 	@fixtures.append($("<textarea />")[0] for i in [1..3])
-	el = @fixtures.find("textarea").eq(1)
+	el = @fixtures.find("textarea").textListManager().eq(1)
 
 	list = el.textListManager("list")
 	strictEqual el.val(), ""
 	deepEqual list, []
 
+	el.textListManager("add", "foo")
+	list = el.textListManager("list")
+	strictEqual el.val(), "foo"
+	deepEqual list, ["foo"]
+
 	el.textListManager("add", "hello world")
-	strictEqual el.val(), "hello world"
-	deepEqual list, ["hello world"]
+	list = el.textListManager("list")
+	strictEqual el.val(), "foo, hello world"
+	deepEqual list, ["foo", "hello world"]
 
 	return)
